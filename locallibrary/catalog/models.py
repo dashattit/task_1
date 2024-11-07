@@ -61,19 +61,18 @@ class Book(models.Model):
         return reverse('book-detail', args=[str(self.id)])
 
     def display_genre(self):
-        """
-        Creates a string for the Genre. This is required to display genre in Admin.
-        """
+
+        # Создает строку для жанра. Это необходимо для отображения жанра в Admin.
+
         return ', '.join([genre.name for genre in self.genre.all()[:3]])
     display_genre.short_description = 'Genre'
 
 
-
 # Модель BookInstance
 class BookInstance(models.Model):
-    """
-    Model representing a specific copy of a book (i.e. that can be borrowed from the library).
-    """
+
+    # Модель, представляющая конкретный экземпляр книги (т.е. ту, которую можно взять напрокат в библиотеке).
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular book across whole library")
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
@@ -94,11 +93,11 @@ class BookInstance(models.Model):
         permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
-        """
-        String for representing the Model object
-        """
+
+        # Строка для представления модельного объекта
+
         return f'Книга: {self.book.title}, Статус: {self.get_status_display()}, Дата возврата: {self.due_back}, ID: {self.id}'
-        # return '%s (%s)' % (self.id,self.book.title)
+
 
     @property
     def is_overdue(self):
@@ -125,3 +124,5 @@ class Author(models.Model):
 
     class Meta:
         ordering = ['last_name']
+
+
