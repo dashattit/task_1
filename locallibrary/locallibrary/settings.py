@@ -33,13 +33,12 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth', # фреймворк аутентификации и моделей по умолчанию
-    'django.contrib.contenttypes', # даёт разрешения, связанные с моделями
+    'django.contrib.auth', #фреймворк аутентификации и моделей по умолчанию
+    'django.contrib.contenttypes', #даёт разрешения, связанные с моделями
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
-
 ]
 
 MIDDLEWARE = [
