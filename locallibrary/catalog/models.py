@@ -123,12 +123,11 @@ class Author(models.Model):
             if (date.today().month, date.today().day) < (self.date_of_birth.month, self.date_of_birth.day):
                 age -= 1
             if age < 20:
-                return ValidationError('Возраст автора должен быть не меньше 20 лет')
+                raise ValidationError('Возраст автора должен быть не меньше 20 лет')
 
         # проверка на дату смерти
         if self.date_of_death and self.date_of_birth >= self.date_of_death:
-                return ValidationError('Дата смерти не может быть раньше даты рождения')
-
+                raise ValidationError('Дата смерти не может быть раньше даты рождения')
 
 
 
