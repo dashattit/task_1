@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 import uuid # Требуется для уникальных экземпляров книг
@@ -114,6 +115,22 @@ class Author(models.Model):
     def __str__(self):
         # Строка для представления модельного объекта
         return '%s, %s' % (self.last_name, self.first_name)
+
+    def clean(self):
+        # проверка на минимальный возраст 20 лет
+        if self.date_of_birth:
+            age = date.today().year - self.date_of_birth.year
+            if (date.today().month, date.today().day) < (self.date_of_birth.month, self.date_of_birth.day):
+                age -= 1
+            if age < 20:
+                return ValidationError('Возраст автора должен быть не меньше 20 лет')
+
+        # проверка на дату смерти
+        if self.date_of_death and self.date_of_birth >= self.date_of_death:
+                return ValidationError('Дата смерти не может быть раньше даты рождения')
+
+
+
 
     class Meta:
         ordering = ['last_name']
